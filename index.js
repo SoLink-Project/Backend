@@ -21,7 +21,9 @@ import { getError, redirectLink, counterNumber, getLINK } from "./linkShorting.j
 import { weeklyTask, monthlyTask, yearlyTask, dailyTask } from './schedule.js';
 
 const corsOptions = {
-  origin: [process.env.DOMAIN]
+  origin: [
+    process.env.DOMAIN
+  ]
 };
 
 app.use(cors(corsOptions));
