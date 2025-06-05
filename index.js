@@ -29,6 +29,22 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(json());
 
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const userAgent = req.headers['user-agent'];
+
+  if (
+    !origin ||         
+    userAgent?.includes('Postman') ||
+    userAgent?.includes('curl') ||
+    userAgent?.includes('Insomnia')
+  ) {
+    return res.status(403).json({ message: 'Access denied' });
+  }
+
+  next();
+});
+
 app.get('/', (req, res) => {
   const message = 'It works!\n';
   const version = 'NodeJS ' + process.versions.node + '\n';
@@ -44,7 +60,7 @@ app.post('/data', getLINK);
 (async () => {
   try {
     const client = await pool.connect();
-    console.log(`[` + new Date().toLocaleString() + `] MYSQL succesful connect the server!`);
+    console.log(`[` + new Date().toLocaleString() + `] PostgreSQL succesful connect the server!`);
     promptUser()
     client.release();
   } catch (err) {
