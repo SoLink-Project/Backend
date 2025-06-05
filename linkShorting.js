@@ -48,8 +48,8 @@ const getError = async (req, res) => {
         const SQLGETVALID = `SELECT CREATED_LINK FROM links WHERE LINK = $1`;
         const haveLink = await pool.query(SQLGETVALID, [longLink]);
         if (haveLink.rows.length > 0) {
-            console.log(`[` + new Date().toLocaleString() + `] Someone tried to register an existing link! ${longLink} to ${domainName + haveLink.rows[0].CREATED_LINK}`);
-            return res.json({ exists: true, link: haveLink.rows[0].CREATED_LINK, error: ErrorMesssage_1 });
+            console.log(`[` + new Date().toLocaleString() + `] Someone tried to register an existing link! ${longLink} to ${domainName + "/" + haveLink.rows[0].created_link}`);
+            return res.json({ exists: true, link: haveLink.rows[0].created_link, error: ErrorMesssage_1 });
         }
 
         var completeLink = '';
